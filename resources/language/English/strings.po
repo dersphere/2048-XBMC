@@ -1,0 +1,3 @@
+msgctxt "#32000"
+msgid "New Game"
+msgstr ""
