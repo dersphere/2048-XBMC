@@ -48,6 +48,7 @@ ACTION_RIGHT = 2
 ACTION_UP = 3
 ACTION_DOWN = 4
 ACTION_MENU = 122
+ACTION_BACK = 92
 
 WINDOW_X = 390
 WINDOW_Y = 110
@@ -485,9 +486,10 @@ class Window(xbmcgui.WindowXMLDialog):
             moved = self.grid.move('up')
         elif action_id == ACTION_DOWN:
             moved = self.grid.move('down')
-        elif action_id == ACTION_MENU:
-            #self.grid.start_game()
+        elif action_id == ACTION_BACK:
             self.exit()
+        elif action_id == ACTION_MENU:
+            self.grid.start_game()
         if moved and not self.grid.move_available():
             xbmcgui.Dialog().ok(
                 heading='You loose',
