@@ -446,7 +446,7 @@ class Grid(object):
                         merged_value = cell.tile.value * 2
                         cell.tile.merge(next)
                         next.tile.merge(next)
-                        merged_tile = Tile(self, next, merged_value, is_merged=True)
+                        next.tile = Tile(self, next, merged_value, is_merged=True)
                         moved = True
                         self.score += merged_value
                     else:
