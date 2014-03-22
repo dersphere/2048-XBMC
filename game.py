@@ -432,7 +432,7 @@ class Grid(object):
             for column in traversals['columns']:
                 cell = self.at(row, column)
                 if cell.has_tile:
-                    fartest_free, next = self.find_farthest_cells(cell, vector)
+                    farthest_free, next = self.find_farthest_cells(cell, vector)
                     # print 'cell: (%d, %d)' % (cell.row, cell.column)
                     # print 'previous: %s' % (repr(previous))
                     # print 'next: %s' % (repr(next))
@@ -450,7 +450,7 @@ class Grid(object):
                         moved = True
                         self.score += merged_value
                     else:
-                        if cell.tile.move(fartest_free):
+                        if cell.tile.move(farthest_free):
                             moved = True
         if moved:
             self.score_control.setLabel('Score: %d' % self.score)
