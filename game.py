@@ -37,6 +37,10 @@ MEDIA_PATH = os.path.join(
 )
 
 STRINGS = {
+    'score': 32000,
+    'highscore': 32001,
+    'lose_heading': 32002,
+    'lose_line1': 32003,
 }
 
 
@@ -266,8 +270,8 @@ class Grid(object):
         self._delete_cells()
         self._generate_cells()
         self.score = 0
-        self.score_control.setLabel('Score: %d' % self.score)
-        self.highscore_control.setLabel('Highscore: %d' % self.highscore.value)
+        self.score_control.setLabel(_('score') % self.score)
+        self.highscore_control.setLabel(_('highscore') % self.highscore.value)
         self.add_random_tile()
         self.add_random_tile()
 
@@ -454,10 +458,10 @@ class Grid(object):
                         if cell.tile.move(farthest_free):
                             moved = True
         if moved:
-            self.score_control.setLabel('Score: %d' % self.score)
+            self.score_control.setLabel(_('score') % self.score)
             if self.score > self.highscore.value:
                 self.highscore.value = self.score
-                self.highscore_control.setLabel('Highscore: %d' % self.highscore.value)
+                self.highscore_control.setLabel(_('highscore') % self.highscore.value)
             self.add_random_tile()
         return moved
 
@@ -492,8 +496,8 @@ class Window(xbmcgui.WindowXMLDialog):
             self.grid.start_game()
         if moved and not self.grid.move_available():
             xbmcgui.Dialog().ok(
-                heading='You loose',
-                line1='hahahaha',
+                heading=_('lose_heading'),
+                line1=_('lose_line1'),
             )
             self.grid.start_game()
 

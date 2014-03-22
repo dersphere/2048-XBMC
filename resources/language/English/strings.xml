@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <!-- labels -->
+    <string id="32000">Score: %d</string>
+    <string id="32001">Highscore: %d</string>
+    <string id="32002">Game over</string>
+    <string id="32003">You lose...</string>
+</strings>
