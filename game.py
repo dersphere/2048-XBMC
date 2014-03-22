@@ -117,10 +117,10 @@ class HighscoreManager(object):
 
     @property
     def _filepath(self):
-        return os.path.join(
-            xbmc.translatePath(addon.getAddonInfo('profile').decode('utf-8')),
-            'highscore.txt',
-        )
+        folder = xbmc.translatePath(addon.getAddonInfo('profile').decode('utf-8'))
+        if not os.path.isdir(folder):
+            os.makedirs(folder)
+        return os.path.join(folder, 'highscore.txt')
 
     value = property(_get, _set)
 
