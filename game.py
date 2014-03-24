@@ -350,7 +350,7 @@ class Grid(object):
             if cell.tile:
                 for direction in ('up', 'down', 'right', 'left'):
                     vector = self.get_vector(direction)
-                    other_cell = self.at(
+                    other_cell = self.cell_at(
                         row=cell.row + vector['row'],
                         column=cell.column + vector['column'],
                     )
@@ -366,7 +366,7 @@ class Grid(object):
             return False
         return True
 
-    def at(self, row, column):
+    def cell_at(self, row, column):
         if not self.within_grid(row, column):
             return None
         return self.cells[row][column]
@@ -406,7 +406,7 @@ class Grid(object):
 
     def find_farthest_cells(self, cell, vector):
         farthest_free_cell = cell
-        next_cell = self.at(
+        next_cell = self.cell_at(
             row=cell.row + vector['row'],
             column=cell.column + vector['column'],
         )
@@ -414,7 +414,7 @@ class Grid(object):
             # print 'previous: %s' % repr(previous)
             # print 'next: %s' % repr(cell)
             farthest_free_cell = next_cell
-            next_cell = self.at(
+            next_cell = self.cell_at(
                 row=farthest_free_cell.row + vector['row'],
                 column=farthest_free_cell.column + vector['column'],
             )
@@ -427,7 +427,7 @@ class Grid(object):
         moved = False
         for row in traversals['rows']:
             for column in traversals['columns']:
-                cell = self.at(row, column)
+                cell = self.cell_at(row, column)
                 if cell.has_tile:
                     farthest_free_cell, next_cell = self.find_farthest_cells(
                         cell, vector
