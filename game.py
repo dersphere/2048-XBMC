@@ -139,14 +139,6 @@ class Cell(object):
             self.tile.__del__()
 
     @property
-    def within_grid(self):
-        if self.row < 0 or self.row >= self.grid.size:
-            return False
-        elif self.column < 0 or self.column >= self.grid.size:
-            return False
-        return True
-
-    @property
     def has_tile(self):
         return self.tile is not None
 
