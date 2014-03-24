@@ -7,12 +7,12 @@
     <extension point="xbmc.addon.metadata">
         <language/>
         <platform>all</platform>
-        <website></website>
-        <source></source>
-        <forum></forum>
+        <website>http://gabrielecirulli.github.io/2048/</website>
+        <source>https://github.com/dersphere/2048-XBMC</source>
+        <forum>http://forum.xbmc.org/showthread.php?tid=190271</forum>
         <email>sphere@dersphere.de</email>
         <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <summary lang="en">Game 2048</summary>
-        <description lang="en">2048</description>
+        <summary lang="en">The game 2048 for XBMC</summary>
+        <description lang="en">2048 is a puzzle game.[CR]- Press up/down/right/left to move the tiles[CR]- Press back to exit[CR]- Press menu (e.g. "m" on keyboard) to start a new game[CR]- If tiles with same value overlap they join into one tile with double value[CR]- Goal is to get the 2048 tile but you will see your own persistent highscore[CR]- After any move a new random tile will spawn[CR]- you lose when no moves are available</description>
     </extension>
 </addon>
