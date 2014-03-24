@@ -155,7 +155,7 @@ class Tile(object):
         self.original_cell = None
         self.is_merged = is_merged
         self._build_control()
-        self.spawn()
+        self._spawn_at_cell(cell)
 
     def __del__(self):
         self._del_control()
@@ -180,9 +180,7 @@ class Tile(object):
         self.grid.window.removeControl(self.control)
         self.control = None
 
-    def get_coordinates(self, cell=None):
-        if cell is None:
-            cell = self.cell
+    def _get_coordinates(self, cell):
         x = self.grid.window.x + int(
             float(self.grid.window.zoom) *
             float(TILE_GAP + cell.column * (TILE_WIDTH + TILE_GAP))
@@ -193,11 +191,11 @@ class Tile(object):
         )
         return x, y
 
-    def spawn(self):
+    def _spawn_at_cell(self, cell):
         if self.value is None:
             self.value = random.choice(TILE_VALUE_CHOICES)
         # print 'spawn %s' % self.cell
-        x, y = self.get_coordinates()
+        x, y = self._get_coordinates(cell)
         if self.is_merged:
             # merge
             self.control.setAnimations([
@@ -212,15 +210,14 @@ class Tile(object):
                 ('conditional', SPAWN_ZOOM_EFFECT % ANIM_TIME),
                 ('conditional', SPAWN_FADE_EFFECT),
             ])
-        self.cell.tile = self
         self.control.setImage(get_image('%d.png' % self.value))
 
-    def move(self, new_cell):
+    def move_to_cell(self, new_cell):
         # print 'move %s -> %s' % (self.cell, new_cell)
         if self.cell == new_cell:
             return False
-        x, y = self.get_coordinates()
-        new_x, new_y = self.get_coordinates(new_cell)
+        x, y = self._get_coordinates(self.cell)
+        new_x, new_y = self._get_coordinates(new_cell)
         self.control.setAnimations([
             ('conditional', SLIDE_EFFECT % (x, y, new_x, new_y, ANIM_TIME))
         ])
@@ -230,11 +227,11 @@ class Tile(object):
         self.control.setImage(get_image('%d.png' % self.value))
         return True
 
-    def merge(self, new_cell):
+    def merge_at_cell(self, new_cell):
         # print 'move_and_merge %s -> %s' % (self.cell, new_cell)
         self.is_merged = True
-        x, y = self.get_coordinates(self.original_cell or self.cell)
-        new_x, new_y = self.get_coordinates(new_cell)
+        x, y = self._get_coordinates(self.original_cell or self.cell)
+        new_x, new_y = self._get_coordinates(new_cell)
         self.control.setAnimations([
             ('conditional', SLIDE_EFFECT % (x, y, new_x, new_y, ANIM_TIME)),
         ])
@@ -440,13 +437,13 @@ class Grid(object):
                     )
                     if can_be_merged:
                         merged_value = cell.tile.value * 2
-                        cell.tile.merge(next_cell)
-                        next_cell.tile.merge(next_cell)
+                        cell.tile.merge_at_cell(next_cell)
+                        next_cell.tile.merge_at_cell(next_cell)
                         next_cell.tile = Tile(self, next_cell, merged_value, is_merged=True)
                         moved = True
                         self.score += merged_value
                     else:
-                        if cell.tile.move(farthest_free_cell):
+                        if cell.tile.move_to_cell(farthest_free_cell):
                             moved = True
         if moved:
             self.score_control.setLabel(_('score') % self.score)
